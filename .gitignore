@@ -19,6 +19,13 @@ pnpm-lock.yaml
 
 
 src/core
-src/modules
-src/config
-http
+src/modules/auth
+src/modules/cart
+src/modules/categories
+src/modules/orders
+src/modules/products
+src/modules/roles
+
+src/config/cors.ts
+src/config/env.ts
+src/config/jwt.ts

@@ -7,6 +7,6 @@ router.get("/healthy", (_, res: Response) => {
   res.json({ status: "API is healthy" });
 });
 
-// router.use("/users", userRoutes);
+router.use("/users", userRoutes);
 
 export default router;
