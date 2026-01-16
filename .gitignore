@@ -17,8 +17,15 @@ pnpm-lock.yaml
 # IDE
 .vscode
 
+#
+src/core/types/
+src/core/utils/
+src/core/types/
+#
+src/core/middlewares/auth.middleware.ts
+src/core/middlewares/role.middleware.ts
+src/core/middlewares/validate.middleware.ts
 
-src/core
 src/modules/auth
 src/modules/cart
 src/modules/categories

@@ -1,4 +1,4 @@
-import { Router, Request, Response } from "express";
+import { Router, Response } from "express";
 import userRoutes from "@modules/users/user.routes";
 
 const router: Router = Router();

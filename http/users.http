@@ -1,13 +1,26 @@
-### Get all user 
-GET http://localhost:8080/api/v1/users
-
 ### Create a new user
 POST http://localhost:8080/api/v1/users
 Content-Type: application/json
 
 {
-  "name": "Lionel Messi",
-  "username": "la pulga",
-  "email": "lionel.messi@example.com"
+  "name": "Enzo Fernandez",
+  "username": "el mago",
+  "email": "enzo.fernandez@example.com"
 }
 
+### Get all user 
+GET http://localhost:8080/api/v1/users
+
+### Get user by ID
+GET http://localhost:8080/api/v1/users/6969c375e3bf3cbe64715b95
+
+### Update user by ID
+PATCH  http://localhost:8080/api/v1/users/6969c375e3bf3cbe64715b94
+Content-Type: application/json  
+
+{
+  "name": "Enzo Fernandez",
+  "username": ""
+}
+### Delete user by ID
+DELETE   http://localhost:8080/api/v1/users/69694b441d0fa0b4808de666
