@@ -26,7 +26,14 @@ src/core/middlewares/auth.middleware.ts
 src/core/middlewares/role.middleware.ts
 src/core/middlewares/validate.middleware.ts
 
-src/modules/auth
+src/modules/auth/auth.types.ts
+src/modules/auth/auth.repository.ts
+src/modules/auth/auth.service.ts
+src/modules/auth/auth.model.ts
+src/modules/auth/auth.schema.ts
+src/modules/auth/index.ts
+
+
 src/modules/cart
 src/modules/categories
 src/modules/orders
@@ -34,5 +41,4 @@ src/modules/products
 src/modules/roles
 
 src/config/cors.ts
-src/config/env.ts
 src/config/jwt.ts

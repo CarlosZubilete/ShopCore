@@ -2,7 +2,8 @@ import { Response, Request, NextFunction } from "express";
 import { UserService } from "./user.service";
 import { UserRepository } from "./user.repository";
 import { ErrorCode, InternalError, NotFoundError } from "@core/errors/index";
-import { UserSchema, UpdateUserSchema } from "./user.schema";
+import { CreateUserSchema, UpdateUserSchema } from "./user.schema";
+import { IUser } from "./user.types";
 
 const userRepository = new UserRepository();
 const userService = new UserService(userRepository);
@@ -12,8 +13,8 @@ export const createUser = async (
   res: Response,
   next: NextFunction
 ) => {
-  const userData = UserSchema.parse(req.body);
-  const newUser = await userService.createUser(userData);
+  const userData = CreateUserSchema.parse(req.body);
+  const newUser = await userService.createUser(userData as IUser);
   if (!newUser)
     return next(new InternalError("Failed to create user", 500, null));
   res.status(201).json(newUser);

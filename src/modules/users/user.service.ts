@@ -1,4 +1,4 @@
-import { User, IUserService, IUserRepository } from "./user.types";
+import { IUser, IUserService, IUserRepository } from "./user.types";
 
 export class UserService implements IUserService {
   private userRepository: IUserRepository;
@@ -7,19 +7,23 @@ export class UserService implements IUserService {
     this.userRepository = userRepository;
   }
 
-  async createUser(data: User): Promise<User> {
+  async createUser(data: IUser): Promise<IUser> {
     return this.userRepository.create(data);
   }
 
-  async findUsers(): Promise<User[]> {
+  async findUsers(): Promise<IUser[]> {
     return this.userRepository.find();
   }
 
-  async findUserById(id: string): Promise<User | null> {
+  async findUserById(id: string): Promise<IUser | null> {
     return this.userRepository.findById(id);
   }
 
-  async updateUser(id: string, data: Partial<User>): Promise<User | null> {
+  async findUserByEmail(email: string): Promise<IUser | null> {
+    return this.userRepository.findOne({ email });
+  }
+
+  async updateUser(id: string, data: Partial<IUser>): Promise<IUser | null> {
     return this.userRepository.update(id, data);
   }
 
