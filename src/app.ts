@@ -1,11 +1,6 @@
 import app from "./server";
-import dotenv from "dotenv";
-import "./config/database";
-
-// Load environment variables from .env file
-dotenv.config();
-
-const PORT: string | number = process.env.PORT || 8080;
+import { PORT } from "@config/env";
+import "@config/database";
 
 // 404 handler
 app.use(function (_, res) {

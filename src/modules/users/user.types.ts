@@ -1,18 +1,23 @@
-import { Repository } from "../repository";
+import { IRepository, Query } from "../repository";
+import { Document } from "mongoose";
 
-export interface User {
-  _id?: string;
+export interface IUser extends Document {
   name: string;
   username: string;
   email: string;
+  password: string;
+  comparePassword(password: string): Promise<boolean>;
 }
 
-export interface IUserRepository extends Repository<User> {}
+export interface IUserRepository extends IRepository<IUser> {
+  findOne(query: Query): Promise<IUser | null>;
+}
 
 export interface IUserService {
-  createUser(data: User): Promise<User>;
-  findUsers(): Promise<User[]>;
-  findUserById(id: string): Promise<User | null>;
-  updateUser(id: string, data: Partial<User>): Promise<User | null>;
+  createUser(data: IUser): Promise<IUser>;
+  findUsers(query?: Query): Promise<IUser[]>;
+  findUserById(id: string): Promise<IUser | null>;
+  findUserByEmail(email: string): Promise<IUser | null>;
+  updateUser(id: string, data: Partial<IUser>): Promise<IUser | null>;
   deleteUser(id: string): Promise<boolean>;
 }
