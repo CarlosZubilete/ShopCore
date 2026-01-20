@@ -17,20 +17,16 @@ pnpm-lock.yaml
 # IDE
 .vscode
 
+# Dev
+baas.md
+TYPE_GUIDE.md
 #
-src/core/types/
-src/core/utils/
-src/core/types/
+src/core/utils/longger.ts
+
 #
-src/core/middlewares/auth.middleware.ts
 src/core/middlewares/role.middleware.ts
 src/core/middlewares/validate.middleware.ts
 
-src/modules/auth/auth.types.ts
-src/modules/auth/auth.repository.ts
-src/modules/auth/auth.service.ts
-src/modules/auth/auth.model.ts
-src/modules/auth/auth.schema.ts
 src/modules/auth/index.ts
 
 

@@ -1,78 +1,45 @@
-import { Request, Response, NextFunction } from "express";
-import { JWT_SECRET } from "@config/env";
-import jwt from "jsonwebtoken";
-import {
-  IUserRepository,
-  IUserService,
-  UserRepository,
-  UserService,
-} from "@modules/users";
-import { BadRequestError, ErrorCode } from "@core/errors";
+import { Request, Response } from "express";
+import { IUser, UserRepository, UserService } from "@modules/users";
+import { LoginInput } from "./auth.schema";
+import { CreateUserInput } from "@modules/users/user.schema";
+import { AuthRepository } from "./auth.repository";
+import { AuthService } from "./auth.service";
+import { setAuthCookie, clearAuthCookie } from "@core/utils/cookies";
 
-const userRepository: IUserRepository = new UserRepository();
-const userService: IUserService = new UserService(userRepository);
+const authRepository = new AuthRepository();
+const userRepository = new UserRepository();
+const authService = new AuthService(userRepository, authRepository);
 
-export const login = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const { email, password } = req.body;
-  const user = await userService.findUserByEmail(email);
-  if (!user)
-    return next(
-      new BadRequestError(
-        "Invalid user or password",
-        ErrorCode.INVALID_CREDENTIALS
-      )
-    );
+export const login = async (req: Request, res: Response) => {
+  const { email, password } = LoginInput.parse(req.body); // schema validation form users modules
 
-  const hashMatch = await user.comparePassword(password);
-  if (!hashMatch)
-    return next(
-      new BadRequestError(
-        "Invalid user or password",
-        ErrorCode.INVALID_CREDENTIALS
-      )
-    );
+  const token = await authService.login(email, password);
+  const user = await userRepository.findOne({ email });
 
-  const token = jwt.sign(
-    { id: user._id, email: user.email, username: user.username },
-    JWT_SECRET,
-    {
-      expiresIn: "1h",
-    }
-  );
+  setAuthCookie(res, token);
 
-  res.json({ message: "Login successful", token });
+  // Return user info excluding sensitive data
+  res.json({ sub: user?._id, email: user?.email, username: user?.username });
 };
 
-// export const register = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   const { email } = req.body;
+export const register = async (req: Request, res: Response) => {
+  const data = CreateUserInput.parse(req.body);
+  const newUser = await authService.register(data as IUser);
 
-//   const existingUser = await userService.findUserByEmail(email);
-//   if (existingUser)
-//     return next(
-//       new BadRequestError(
-//         "User with this email already exists",
-//         ErrorCode.DOCUMENT_ALREADY_EXISTS
-//       )
-//     );
+  res.status(201).json(newUser);
+};
 
-//   const newUser = await userService.createUser(req.body);
-//   if (!newUser)
-//     return next(
-//       new BadRequestError(
-//         "Failed to register user",
-//         ErrorCode.INTERNAL_SERVER_ERROR
-//       )
-//     );
+export const logout = async (req: Request, res: Response) => {
+  const token = req.cookies.access_token;
 
-//   res
-//     .status(201)
-//     .json({ message: "User registered successfully", user: newUser });
-// };
+  // console.log("Logging out token:", token);
+  const result = await authService.logout(token);
+
+  if (!result) {
+    return res.status(400).json({ message: "Failed to logout" });
+  }
+
+  clearAuthCookie(res);
+
+  res.status(200).json({ message: "Logged out successfully" });
+};

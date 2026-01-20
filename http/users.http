@@ -1,28 +1,32 @@
+@authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OTZiMmFmMTVlM2RjMzQyNzE1NWE5ZjYiLCJpYXQiOjE3Njg5NDM5MTcsImV4cCI6MTc2ODk0NzUxN30.SJNzpQjxht-QjyeBeVHiAnF0VvPiyGqGpTpm_U_66EA
 ### Create a new user
 POST http://localhost:8080/api/v1/users
+Cookie: access_token={{authToken}}
 Content-Type: application/json
 
 {
-  "name": "test user",
-  "username": "test user",
-  "email": "test.user@example.com",
+  "name": "Mariano  Belgrano UPDATE",
+  "username": "mariano.belgrano",
+  "email": "mariano.belgrano@example.com",
   "password": "password123"
 }
 
 ### Get all user 
 GET http://localhost:8080/api/v1/users
+Cookie: access_token={{authToken}}
 
 ### Get user by ID
-GET http://localhost:8080/api/v1/users/696b2af15e3dc3427155a9f6
-
+GET http://localhost:8080/api/v1/users/69694bc0edbafb161be7cd26
+Cookie: access_token={{authToken}}
 ### Update user by ID
 PATCH  http://localhost:8080/api/v1/users/696b2af15e3dc3427155a9f6
+Cookie: access_token={{authToken}}
 Content-Type: application/json  
 
 {
-  "name": "test",
-  "username": "test",
-  "email": "test@example.com",
+  "name": "test user updated"
 }
+
 ### Delete user by ID
-DELETE   http://localhost:8080/api/v1/users/69694b441d0fa0b4808de666
+DELETE   http://localhost:8080/api/v1/users/696e54afbd45893c7ec7b0c8
+Cookie: access_token={{authToken}}
