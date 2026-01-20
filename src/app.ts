@@ -1,3 +1,4 @@
+// import "express-async-errors";
 import app from "./server";
 import { PORT } from "@config/env";
 import "@config/database";

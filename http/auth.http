@@ -1,3 +1,4 @@
+@authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OTZiMmFmMTVlM2RjMzQyNzE1NWE5ZjYiLCJpYXQiOjE3Njg5NDM5MTcsImV4cCI6MTc2ODk0NzUxN30.SJNzpQjxht-QjyeBeVHiAnF0VvPiyGqGpTpm_U_66EA
 ### Login user
 POST http://localhost:8080/api/v1/auth/login
 Content-Type: application/json
@@ -6,3 +7,18 @@ Content-Type: application/json
   "email": "test.user@example.com",
   "password": "password123"
 }
+
+### Register new user
+POST http://localhost:8080/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "name": "Lautaro Lopez UPDATE",
+  "username": "lautaro.lopez",
+  "email": "lautaro.lopez@example.com",
+  "password": "password123"
+}
+
+### Logout user
+POST http://localhost:8080/api/v1/auth/logout
+Cookie: access_token={{authToken}}

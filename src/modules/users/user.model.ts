@@ -1,7 +1,8 @@
 import { IUser } from "./user.types";
 import mongoose, { Schema } from "mongoose";
-import { SALT_ROUNDS } from "@config/env";
-import bcrypt from "bcrypt";
+//import { SALT_ROUNDS } from "@config/env";
+//import bcrypt from "bcrypt";
+import { comparePassword, hashPassword } from "@core/utils/hash";
 
 const UserSchema: Schema = new Schema<IUser>(
   {
@@ -13,13 +14,15 @@ const UserSchema: Schema = new Schema<IUser>(
   {
     timestamps: true,
     versionKey: false,
-  }
+  },
 );
 
 // Hash password before saving
 UserSchema.pre<IUser>("save", async function () {
   if (this.isModified("password") || this.isNew) {
-    const hashedPassword = await bcrypt.hash(this.password, SALT_ROUNDS);
+    // const hashedPassword = await bcrypt.hash(this.password, SALT_ROUNDS);
+    // this.password = hashedPassword;
+    const hashedPassword = await hashPassword(this.password);
     this.password = hashedPassword;
   }
 });
@@ -28,8 +31,9 @@ UserSchema.pre<IUser>("save", async function () {
 UserSchema.method(
   "comparePassword",
   async function (password: string): Promise<boolean> {
-    return bcrypt.compare(password, this.password as string);
-  }
+    // return bcrypt.compare(password, this.password as string);
+    return comparePassword(password, this.password as string);
+  },
 );
 
 // Hide password in JSON responses

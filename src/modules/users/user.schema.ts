@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 
-export const CreateUserSchema = z.object({
+export const CreateUserInput = z.object({
   name: z
     .string()
     .trim()
@@ -21,7 +21,7 @@ export const CreateUserSchema = z.object({
 });
 
 // For updating user - all fields optional
-export const UpdateUserSchema = z.object({
+export const UpdateUserInput = z.object({
   name: z
     .string()
     .trim()

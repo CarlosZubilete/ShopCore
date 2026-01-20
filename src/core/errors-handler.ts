@@ -21,7 +21,7 @@ export const errorHandler = (method: RequestHandler): RequestHandler => {
         errorResponse = new InternalError(
           "Internal Server Error",
           ErrorCode.INTERNAL_SERVER_ERROR,
-          error
+          error,
         );
       }
       res.status(errorResponse.statusCode).json({

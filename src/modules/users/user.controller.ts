@@ -2,7 +2,7 @@ import { Response, Request, NextFunction } from "express";
 import { UserService } from "./user.service";
 import { UserRepository } from "./user.repository";
 import { ErrorCode, InternalError, NotFoundError } from "@core/errors/index";
-import { CreateUserSchema, UpdateUserSchema } from "./user.schema";
+import { CreateUserInput, UpdateUserInput } from "./user.schema";
 import { IUser } from "./user.types";
 
 const userRepository = new UserRepository();
@@ -11,9 +11,9 @@ const userService = new UserService(userRepository);
 export const createUser = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
-  const userData = CreateUserSchema.parse(req.body);
+  const userData = CreateUserInput.parse(req.body);
   const newUser = await userService.createUser(userData as IUser);
   if (!newUser)
     return next(new InternalError("Failed to create user", 500, null));
@@ -23,12 +23,12 @@ export const createUser = async (
 export const findUsers = async (
   _: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const users = await userService.findUsers();
   if (users.length === 0)
     return next(
-      new NotFoundError("No users found", ErrorCode.DOCUMENTS_NOT_FOUND)
+      new NotFoundError("No users found", ErrorCode.DOCUMENTS_NOT_FOUND),
     );
 
   res.status(200).json(users);
@@ -37,21 +37,21 @@ export const findUsers = async (
 export const findUserById = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const user = await userService.findUserById(req.params.id as string);
   if (!user)
     return next(
-      new NotFoundError("User not found", ErrorCode.DOCUMENT_NOT_FOUND)
+      new NotFoundError("User not found", ErrorCode.DOCUMENT_NOT_FOUND),
     );
   res.status(200).json(user);
 };
 
 export const updateUser = async (req: Request, res: Response) => {
-  const userData = UpdateUserSchema.parse(req.body);
+  const userData = UpdateUserInput.parse(req.body);
   const updatedUser = await userService.updateUser(
     req.params.id as string,
-    userData
+    userData,
   );
   if (!updatedUser) return res.status(404).json({ error: "User not found" });
   res.status(200).json(updatedUser);
@@ -60,12 +60,12 @@ export const updateUser = async (req: Request, res: Response) => {
 export const deleteUser = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const deleted = await userService.deleteUser(req.params.id as string);
   if (!deleted)
     return next(
-      new NotFoundError("User not found", ErrorCode.DOCUMENT_NOT_FOUND)
+      new NotFoundError("User not found", ErrorCode.DOCUMENT_NOT_FOUND),
     );
   res.json({ message: "User deleted successfully" });
 };
