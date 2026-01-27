@@ -1,10 +1,10 @@
-@authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OTZiMmFmMTVlM2RjMzQyNzE1NWE5ZjYiLCJpYXQiOjE3Njg5NDM5MTcsImV4cCI6MTc2ODk0NzUxN30.SJNzpQjxht-QjyeBeVHiAnF0VvPiyGqGpTpm_U_66EA
+@authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OTcxNjFhZThmYTc3OWE2ZjQ5ZDY1YjQiLCJpYXQiOjE3NjkzOTExODAsImV4cCI6MTc2OTM5NDc4MH0.pD1a-ViOKA67bud_-QTgzb8vz6RIRBO_hV6qXTjMa6I
 ### Login user
 POST http://localhost:8080/api/v1/auth/login
 Content-Type: application/json
 
 {
-  "email": "test.user@example.com",
+  "email": "admin.role@example.com",
   "password": "password123"
 }
 
@@ -13,9 +13,9 @@ POST http://localhost:8080/api/v1/auth/register
 Content-Type: application/json
 
 {
-  "name": "Lautaro Lopez UPDATE",
-  "username": "lautaro.lopez",
-  "email": "lautaro.lopez@example.com",
+  "name": "Mariano Martinez",
+  "username": "mariano.martinez",
+  "email": "mariano.martinez@example.com",
   "password": "password123"
 }
 

@@ -1,0 +1,28 @@
+@authToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OTcxNjFhZThmYTc3OWE2ZjQ5ZDY1YjQiLCJpYXQiOjE3NjkzOTExODAsImV4cCI6MTc2OTM5NDc4MH0.pD1a-ViOKA67bud_-QTgzb8vz6RIRBO_hV6qXTjMa6I
+### 
+POST http://localhost:8080/api/v1/roles HTTP/1.1 
+Content-Type: application/json
+
+{
+  "name": "user",
+  "permissions": ["posts_read", "posts_write", "posts_update", "posts_delete"]
+}
+
+### Get all roles
+GET http://localhost:8080/api/v1/roles
+Cookie: access_token={{authToken}}
+
+### Get role by ID
+GET http://localhost:8080/api/v1/roles/697154a8a77cb461617ba7d6
+Cookie: access_token={{authToken}}
+
+
+### Update role by ID
+PATCH http://localhost:8080/api/v1/roles/697154a8a77cb461617ba7d6
+Cookie: access_token={{authToken}}
+Content-Type: application/json  
+
+{
+  "name": "updated_role",
+  "permissions": ["posts_read", "posts_write"]
+}
