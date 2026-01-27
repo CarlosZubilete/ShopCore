@@ -18,13 +18,14 @@ pnpm-lock.yaml
 .vscode
 
 # Dev
+mongodb
 baas.md
+TODO.md
 TYPE_GUIDE.md
 #
 src/core/utils/longger.ts
 
 #
-src/core/middlewares/role.middleware.ts
 src/core/middlewares/validate.middleware.ts
 
 src/modules/auth/index.ts
@@ -34,7 +35,7 @@ src/modules/cart
 src/modules/categories
 src/modules/orders
 src/modules/products
-src/modules/roles
+
 
 src/config/cors.ts
 src/config/jwt.ts

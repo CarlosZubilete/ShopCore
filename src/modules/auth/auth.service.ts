@@ -6,10 +6,16 @@ import { comparePassword } from "@core/utils/hash";
 import { IUser } from "@modules/users/user.types";
 
 export class AuthService implements IAuthService {
+  private userRepository: IUserRepository;
+  private authRepository: IAuthRepository;
+
   constructor(
-    private userRepository: IUserRepository,
-    private authRepository: IAuthRepository,
-  ) {}
+    userRepository: IUserRepository,
+    authRepository: IAuthRepository,
+  ) {
+    this.userRepository = userRepository;
+    this.authRepository = authRepository;
+  }
 
   async login(email: string, password: string): Promise<string> {
     const user = await this.userRepository.findOne({ email });
@@ -38,6 +44,7 @@ export class AuthService implements IAuthService {
     return await this.authRepository.revoke(token);
   }
 
+  // this is the register method like create user
   async register(data: IUser): Promise<IUser> {
     return this.userRepository.create(data);
   }

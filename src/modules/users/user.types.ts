@@ -1,3 +1,4 @@
+import { IRole } from "@modules/roles/role.types";
 import { IRepository, Query } from "../repository";
 import { Document } from "mongoose";
 
@@ -8,6 +9,8 @@ export interface IUser extends Document {
   email: string;
   password: string;
   comparePassword(password: string): Promise<boolean>;
+  permissions?: string[];
+  roles?: IRole[];
 }
 
 export interface IUserRepository extends IRepository<IUser> {

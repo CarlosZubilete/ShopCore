@@ -1,5 +1,6 @@
 /* This is a schema for the inputs from request */
-
+import mongoose from "mongoose";
+import { permission } from "node:process";
 import { z } from "zod";
 
 export const CreateUserInput = z.object({
@@ -18,6 +19,7 @@ export const CreateUserInput = z.object({
     .string()
     .min(8, "Password must be at least 8 characters long")
     .max(100),
+  roles: z.array(z.instanceof(mongoose.Types.ObjectId)).optional(),
 });
 
 // For updating user - all fields optional
@@ -40,7 +42,9 @@ export const UpdateUserInput = z.object({
     .min(8, "Password must be at least 8 characters long")
     .max(100)
     .optional(),
+  roles: z.array(z.instanceof(mongoose.Types.ObjectId)).optional(),
+  permissions: z.array(z.string()).optional(),
 });
 
-// export type UserInput = z.infer<typeof UserInputSchema>;
-// export type UpdateUserInput = z.infer<typeof UpdateUserSchema>;
+// export type UserInput = z.infer<typeof CreateUserInput>;
+// export type UpdateUserInput = z.infer<typeof UpdateUserInput>;
